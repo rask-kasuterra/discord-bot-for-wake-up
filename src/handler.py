@@ -2,20 +2,18 @@ import json
 import os
 import boto3
 
-INSTANCE_ID = os.getenv('INSTANCE_ID')
-
-def start():
+def start(instance_id):
     try:
         ec2 = boto3.resource('ec2')
-        instance = ec2.Instance(INSTANCE_ID)
+        instance = ec2.Instance(instance_id)
         instance.start()
     except Exception as e:
         print(e)
 
-def stop():
+def stop(instance_id):
     try:
         ec2 = boto3.resource('ec2')
-        instance = ec2.Instance(INSTANCE_ID)
+        instance = ec2.Instance(instance_id)
         instance.stop()
     except Exception as e:
         print(e)
@@ -23,15 +21,15 @@ def stop():
 
 def callback(event: dict, context: dict):
     action = event['data']['name']
-    print(f"action = {action}")
+    instance_id = event['data']['instance_id']
 
     if action == "start":
         text = '起こしたからちょい待ち'
-        start()
+        start(instance_id)
 
     if action == "stop":
         text = 'もう少ししたら止まるよ'
-        stop()
+        stop(instance_id)
 
     print(text)
     return {
