@@ -21,7 +21,8 @@ tree = app_commands.CommandTree(client)
 @tree.command(name="start_mc", description="Start Minecraft EC2 Instance")
 async def start(interaction: discord.Interaction):
     headers = {'Content-Type': 'application/json', 'x-api-key': API_KEY}
-
+    
+    print(f"end_point: {API_GATEWAY_ENDPOINT}/start")
     response = requests.post(f"{API_GATEWAY_ENDPOINT}/start", headers=headers)
 
     await interaction.response.send_message("マイクラサーバ起動中",ephemeral=False)
@@ -30,6 +31,7 @@ async def start(interaction: discord.Interaction):
 async def stop(interaction: discord.Interaction):
     headers = {'Content-Type': 'application/json', 'x-api-key': API_KEY}
 
+    print(f"end_point: {API_GATEWAY_ENDPOINT}/stop")
     response = requests.post(f"{API_GATEWAY_ENDPOINT}/stop", headers=headers)
     await interaction.response.send_message("マイクラサーバ停止中",ephemeral=False)
 
