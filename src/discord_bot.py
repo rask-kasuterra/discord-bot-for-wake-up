@@ -5,9 +5,7 @@ import discord
 from discord import app_commands
 from dotenv import load_dotenv
 
-load_dotenv('configs/.env_dev')
-
-#TOKEN = os.getenv('TOKEN')
+load_dotenv('configs/.env')
 
 API_KEY = os.getenv('API_KEY')
 API_GATEWAY_ENDPOINT = os.getenv('API_GATEWAY_ENDPOINT')
@@ -21,7 +19,7 @@ tree = app_commands.CommandTree(client)
 @tree.command(name="start_mc", description="Start Minecraft EC2 Instance")
 async def start(interaction: discord.Interaction):
     headers = {'Content-Type': 'application/json', 'x-api-key': API_KEY}
-    
+
     print(f"end_point: {API_GATEWAY_ENDPOINT}/start")
     response = requests.post(f"{API_GATEWAY_ENDPOINT}/start", headers=headers)
 
